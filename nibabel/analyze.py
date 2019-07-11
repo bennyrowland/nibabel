@@ -605,7 +605,10 @@ class AnalyzeHeader(LabeledWrapStruct):
         dims = self._structarr['dim']
         ndims = dims[0]
         if ndims == 0:
-            return 0,
+            # try to guess the number of dimensions by looking at the number
+            # of non-zero dimensions
+            ndims = np.sum(dims[1:] > 0)
+            #return 0,
         return tuple(int(d) for d in dims[1:ndims + 1])
 
     def set_data_shape(self, shape):
